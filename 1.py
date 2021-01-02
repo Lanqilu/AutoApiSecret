@@ -98,34 +98,4 @@ def main():
         pass
 for _ in range(3):
     main()
-    
-def main_invoke():
-    file = path.open(mode='r', encoding='utf-8')
-    old_refresh_token = file.read()
-    file.close()
 
-    access_token = get_token(old_refresh_token)
-    headers = {
-        'Authorization': access_token,
-        'Content-Type': 'application/json'
-    }
-
-    random.shuffle(api_list)  # 执行洗牌算法，使得每次相邻调用的顺序不一致
-
-    try:
-        for api_url in api_list:
-            time.sleep(random.randrange(2, 12))
-            if req.get(api_url, headers=headers).status_code == 200:
-                print("调用成功: ", api_url)
-            else:
-                print("调用异常: ", api_url)
-
-        print('此次运行结束时间为: ', time.asctime(time.localtime(time.time())))
-    except:
-        print("调用出现异常，pass")
-        pass
-
-
-for _ in range(random.randrange(3, 6)):
-    time.sleep(60 * random.randrange(1, 8))
-    main_invoke()
